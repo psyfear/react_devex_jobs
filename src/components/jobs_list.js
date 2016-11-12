@@ -7,10 +7,9 @@ class JobList extends Component {
     this.props.fetchJobs('');
   }
 
-  renderJobs(jobData) {
-    console.log('jobData:', jobData);
-    return jobData.data.map((job) => {
-      return(
+  renderJobs() {
+    return this.props.jobs.data.map((job) => {
+      return (
         <tr key={job.id}>
           <td>{job.name}</td>
           <td>{job.employer_company.name}</td>
@@ -21,9 +20,13 @@ class JobList extends Component {
     });
   }
 
+
   render() {
     console.log('Jobs: ', this.props.jobs);
     console.log('Jobs Data: ', this.props.jobs.data);
+    if(!this.props.jobs.data) {
+      return <div>Loading...</div>
+    }
     return(
       <table className="table table-hover">
         <thead>
@@ -35,15 +38,15 @@ class JobList extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.jobs.map(this.renderJobs)}
+          {this.renderJobs()}
         </tbody>
       </table>
     )
   }
 }
 
-function mapStateToProps({ jobs }) {
-  return { jobs };// {jobs} === {jobs: jobs}
+function mapStateToProps(state) {
+  return { jobs: state.jobs.list };
 }
 
 export default connect(mapStateToProps, { fetchJobs })(JobList);
