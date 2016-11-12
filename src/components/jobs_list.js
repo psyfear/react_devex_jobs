@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { fetchJobs } from '../actions/index';
+import { Link } from 'react-router';
+
 
 class JobList extends Component {
   componentWillMount() {
@@ -11,7 +13,11 @@ class JobList extends Component {
     return this.props.jobs.data.map((job) => {
       return (
         <tr key={job.id}>
-          <td>{job.name}</td>
+          <td>
+            <Link to={"jobs/" + job.id}>
+              {job.name}
+            </Link>
+          </td>
           <td>{job.employer_company.name}</td>
           <td>{job.workflow_state}</td>
           <td>{job.closing_date}</td>
@@ -19,7 +25,6 @@ class JobList extends Component {
       );
     });
   }
-
 
   render() {
     console.log('Jobs: ', this.props.jobs);
