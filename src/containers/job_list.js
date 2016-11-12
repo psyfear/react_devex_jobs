@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import Chart from '../components/chart';
-import GoogleMap from '../components/google_map';
+import { fetchJobs } from '../actions/index';
 
 class JobList extends Component {
+  componentWillMount() {
+    this.props.fetchJobs('');
+  }
+
   renderJobs(jobData) {
     console.log('jobData:', jobData);
     return jobData.data.map((job) => {
@@ -43,4 +46,4 @@ function mapStateToProps({ jobs }) {
   return { jobs };// {jobs} === {jobs: jobs}
 }
 
-export default connect(mapStateToProps)(JobList);
+export default connect(mapStateToProps, { fetchJobs })(JobList);
